@@ -1,5 +1,6 @@
 # Udacity-P4-AdvancedLaneLines
 Computer Vision for Road Lane Finding using Vehicle Front Camera
+By: Chris Gundling
 
 The goals of this project were the following:
 - Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
