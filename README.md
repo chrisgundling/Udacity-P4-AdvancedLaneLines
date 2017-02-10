@@ -14,8 +14,7 @@ The goals of this project were the following:
 ### Code Summary
 I used two different python notebooks for this project, the first (P4_Tuning.pynb) for developing an initial solution using single images at a time and tuning the various parameters. The second (P4_Video.pynb) was for testing on the project video and simplified many of the steps in order to speed up the image processing pipeline. The following sections will refer to both of these notebooks.
 
-### Steps
-#### 1. Camera Calibration
+### Step 1: Camera Calibration
 
 *Rubric: Have the camera matrix and distortion coefficients been computed correctly and checked on one of the calibration images as a test?*
 
@@ -23,7 +22,7 @@ The code for this step is contained in the first code cell of the IPython notebo
 
 Testing of the calibration produced the following before and after images:
 
-### Pipeline (Single Images)
+### Step 2: Pipeline (Single Images)
 
 ##### 1. Distortion Correction
 
@@ -42,7 +41,6 @@ I first used color space transforms on my images, both to grayscale and to HSV c
 Once the color space transform and thresholding is applied, I then used gradient direction, gradient magnitude and gradient thresholding to further process the images. The code for gradient x, y gradient thresholding is shown in section 3a, gradient magnitude in 3b, and gradient direction in 3c. Each of these techniques is able to pick up different aspects of the line pixels in each image.
 
 Once the colorspace and gradient techniques were done, I combined several of these techniques to create the final binary_warped image. Once again, this required significant tuning based on the test images and the final video. The final line of code to create the binary_warped image and an example of the binary warped image are shown below:
-
 
 #### 3. Perspective Transform
 
@@ -71,7 +69,7 @@ This next step is where I spent the most time and got the biggest gain in result
 #### 5. Visualizing the Lanes and Calculating Lane Information
 I then created several sections of code that drew the lane lines on the image, determined the radius of curvature of the lines and determined the car’s position relative to the center of the lanes. I then tested the full implementation of all these techniques on the 6 test images that were provided and the results can be seen below. Once I had achieved reasonably results on these test images, then I simplified as much of the code as I could (P4_Video.pynb) and ran the video through it. 
 
-### Pipeline (Video)
+### Step 3: Pipeline (Video)
 
 *Rubric:	Does the pipeline established with the test images work to process the video?*
 
