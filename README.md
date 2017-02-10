@@ -16,7 +16,7 @@ The goals of this project were the following:
 - Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
 ### Code Summary
-I used two different python notebooks for this project, the first (`P4-AdvancedLanes-Tuning.ipynb`) for developing an initial solution using single images at a time and tuning the various parameters. The second (`P4_AdvancedLaned-Video.pynb`) was for testing on the project video and in this version I have simplified many of the steps in order to speed up the image processing pipeline. The following sections will refer to both of these notebooks.
+I used two different python notebooks for this project, the first (`P4-AdvancedLanes-Tuning.ipynb`) for developing an initial solution using single images at a time and tuning the various parameters. The second (`P4_AdvancedLaned-Video.pynb`) was for testing on the project video and in this version I have simplified many of the steps in order to speed up the image processing pipeline. The following sections will refer mostly (`P4-AdvancedLanes-Tuning.ipynb`) and the video section will refer to (`P4_AdvancedLaned-Video.pynb`).
 
 ### Step 1: Camera Calibration
 
@@ -39,7 +39,9 @@ The output `objpoints` and `imgpoints` are then used to compute the camera calib
 
 *Rubric: Has the distortion correction been correctly applied to each image?*
 
-The first step in my image processing pipeline was to undistort the image. The code for this step is in the 2nd cell of the  P4_Tuning.pynb notebook and produces following result for one of the test images:
+The first step in my image processing pipeline was to undistort the image. The code for this step is `Step 2: Apply Calibration to Raw Images` notebook and produces following result for one of the test images:
+
+<img src="images/real_calibrate.png" width="1000">
 
 #### 2. Color Transforms, Gradients and Other Methods
 
