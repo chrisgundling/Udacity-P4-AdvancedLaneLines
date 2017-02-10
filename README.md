@@ -32,6 +32,7 @@ I start by preparing "object points", which will be the (`x, y, z`) coordinates 
 The output `objpoints` and `imgpoints` are then used to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function. Distortion correction to the test image is then completed using the `cv2.undistort()` function. The following images show the before and after:
 
 ORIGINAL                                                UNDISTORTED
+
 <img src="images/original.jpg" width="400">
 <img src="images/undistorted.jpg" width="400">
 
