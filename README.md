@@ -3,16 +3,6 @@ Computer Vision for Road Lane Finding using Vehicle Front Camera
 
 By: Chris Gundling
 
-[//]: # (Image References)
-
-[image1]: ./images/img.jpg "original"
-[image2]: ./images/undistorted.jpg "undistorted"
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
-[video1]: ./project_video.mp4 "Video"
-
 ---
 
 The goals of this project were the following:
@@ -41,7 +31,7 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
-![alt text][image1]
+<img src="images/original.png" width="800">
 
 ### Step 2: Pipeline (Single Images)
 
