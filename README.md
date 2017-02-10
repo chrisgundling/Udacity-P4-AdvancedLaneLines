@@ -16,13 +16,18 @@ The goals of this project were the following:
 - Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
 ### Code Summary
-I used two different python notebooks for this project, the first (P4_Tuning.pynb) for developing an initial solution using single images at a time and tuning the various parameters. The second (P4_Video.pynb) was for testing on the project video and simplified many of the steps in order to speed up the image processing pipeline. The following sections will refer to both of these notebooks.
+I used two different python notebooks for this project, the first (`P4-AdvancedLanes-Tuning.ipynb`) for developing an initial solution using single images at a time and tuning the various parameters. The second (`P4_AdvancedLaned-Video.pynb`) was for testing on the project video and in this version I have simplified many of the steps in order to speed up the image processing pipeline. The following sections will refer to both of these notebooks.
 
 ### Step 1: Camera Calibration
 
 *Rubric: Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.*
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called P4_Tuning.pynb). I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image. Thus, objp is just a replicated array of coordinates, and objpoints will be appended with a copy of it every time I successfully detect all chessboard corners in a test image. imgpoints will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.
+I split up the camera calibration into three steps, which are shown in the first 3 code cells of `P4-AdvancedLanes-Tuning.ipynb`:
+1a. Find the corners, undistort and warp
+1b. Example of Image Calibration
+1c. Example of Image Warping
+
+I start by preparing "object points", which will be the (`x, y, z`) coordinates of the chessboard corners in the world. I assume the chessboard is fixed on the (`x, y`) plane at z=0, such that the object points are the same for each calibration image. `objp` is just a replicated array of coordinates, and `objpoints` is appended with a copy of it every time I successfully detect all chessboard corners in a test image. This happends for 17 of the calibration images when I use 9X6 for the number of corners. `imgpoints` are appended with the (`x, y`) pixel position of each of the corners in the image plane with each successful chessboard detection.
 
 Testing of the calibration produced the following before and after images:
 The code for this step is contained in the first code cell of the IPython notebook located in "./examples/example.ipynb" (or in lines # through # of the file called `some_file.py`).  
