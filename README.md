@@ -91,7 +91,9 @@ The birds_eye() function takes as inputs an image (`img`) and harcodes the sourc
 | 705, 460      | 960, 100      |
 | 1140, 720     | 960, 720      |
 
-I verified that my perspective transform was working as expected by visually inspecting the resulting image for parallel lines when using images with straight lane lines. The before and after results can be seen in the following pictures.
+I verified that my perspective transform was working as expected by visually inspecting the resulting image for parallel lines when using images with straight lane lines. The before and after results can be seen in the following picture:
+
+<img src="images/birds_eye.png" width="1000">
 
 #### 4. Lane Line Curve Fitting (Histograms and Sliding Windows)
 
