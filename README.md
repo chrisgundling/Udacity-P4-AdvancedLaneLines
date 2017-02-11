@@ -70,7 +70,7 @@ mag_binary = mag_thresh(bird, sobel_kernel=9, mag_thresh=(50, 200),HLS=False)
 dir_binary_s = dir_threshold(bird, sobel_kernel=15, thresh=(0.7, 1.3), HLS=True) 
 ```
 
-Once the colorspace and gradient techniques were performed, I combined several of these techniques to create the final binary_warped image. Once again, this required significant tuning based on the test images and the final video. The final line of code to create the binary_warped image and an example of the binary warped image are shown below:
+Once the colorspace and gradient techniques were performed, I combined several of these techniques to create the final `binary_warped` image. Once again, this required significant tuning based on the test images and the final video. The final line of code to create the `binary_warped` image and an example of the binary warped image are shown below:
 
 `binary_warped[((gradx_s == 1) & (grady_s == 1)) | (mag_binary_s == 1) | (dir_binary_s == 1) | (mag_binary == 1)] = 1`
 
@@ -80,16 +80,16 @@ Once the colorspace and gradient techniques were performed, I combined several o
 
 *Rubric: Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.*
 
-As previously mentioned, the perspective transform was performed directly after distortion correction. I found it much easier to tune the various color space and gradient transforms when viewing the binary image from the bird’s eye view. This code has been implemented in section `3a. Birds-Eye Perspective Transform` in the `P4-AdvancedLanes-Tuning.ipynb` notebook and the function is called `birds_eye()`.
+As previously mentioned, the perspective transform was performed directly after distortion correction. I found it much easier to tune the various color space and gradient transforms when viewing the binary image from the bird’s eye view. Unexpectedly the bird's eye view also created an excellent mask for only the area of interest in the image. This code has been implemented in section `3a. Birds-Eye Perspective Transform` in the `P4-AdvancedLanes-Tuning.ipynb` notebook and the function is called `birds_eye()`.
 
-The birds_eye() function takes as inputs an image (`img`) and harcodes the source (`src`) and destination (`dst`) points. After considerable tuning, the source and destination points were finalized to be:
+The birds_eye() function takes as inputs an image (`img`) and harcodes the source (`src`) and destination (`dst`) points. After considerable tuning, mostly experimenting with the transformed image's width and height, the source and destination points were finalized to be:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 580, 460      | 200, 100      | 
+| 578, 460      | 200, 100      | 
 | 200, 720      | 200, 720      |
-| 705, 460      | 960, 100      |
-| 1140, 720     | 960, 720      |
+| 705, 460      | 1000, 100     |
+| 1140, 720     | 1000, 720     |
 
 I verified that my perspective transform was working as expected by visually inspecting the resulting image for parallel lines when using images with straight lane lines. The before and after results can be seen in the following picture:
 
@@ -99,7 +99,12 @@ I verified that my perspective transform was working as expected by visually ins
 
 *Rubric: Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?*
 
-After creating the binary_warped image, the next step was to apply a histogram to the image to determine the peak locations of pixels in the image. An example of this technique is shown below. Once the histogram was found, a sliding window technique was used to isolate the lane line pixels in the image. This was a critical step in the code for determining the proper left and right lane lines. 
+After creating the `binary_warped` image, the next step was to apply a histogram to the image to determine the peak locations of pixels in the image. A function to determine the histogram is coded in section `Step 4a. Histogram of Output` in the notebook. An example of this technique is shown below:
+
+<img src="images/histogram.png" width="400">
+<img src="images/sliding_windows.png" width="400">
+
+Once the histogram was found, a sliding window technique was used to isolate the lane line pixels in the image. This was a critical step in the code for determining the proper left and right lane lines. 
 The sliding windows (rectangles) start with their center at the X locations were the peak number of pixels were found. The sliding windows are then extended 100 pixels in either X direction (margin) and look for a minimum of 60 pixels. If this condition is met, then the, otherwise the windows will return to center. Once the lane pixel indices and X,Y locations are determined, a 2nd order polynomial fit was used to fit lines to these pixels for both the left and right lane lines. 
 
 This next step is where I spent the most time and got the biggest gain in results. I used several different techniques to check that the determined polynomial fits for each lane line were realistic. 
