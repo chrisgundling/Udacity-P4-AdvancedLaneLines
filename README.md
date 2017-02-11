@@ -53,11 +53,13 @@ In `Steps 3b-3e` in `P4-AdvancedLanes-Tuning.ipynb` I first used color space tra
 
 Once the color space transform and thresholding is applied, I then used functions that applied Sobel Threshholding in the x and y orientations, gradient magnitude and directional gradient thresholding to further process the images. Each of these techniques is able to pick up different aspects of the line pixels in each image. The following shows the final inputs to each of these functions.
 
-`abs_sobel_thresh(bird, orient='x', thresh_min=5, thresh_max=100, HLS=True)
-grady_s = abs_sobel_thresh(bird, orient='y', thresh_min=5, thresh_max=100, HLS=True)  
-mag_binary_s = mag_thresh(bird, sobel_kernel=9, mag_thresh=(50, 200), HLS=True)
-mag_binary = mag_thresh(bird, sobel_kernel=9, mag_thresh=(50, 200),HLS=False)
-dir_binary_s = dir_threshold(bird, sobel_kernel=15, thresh=(0.7, 1.3), HLS=True)`
+```
+abs_sobel_thresh(bird, orient='x', thresh_min=5, thresh_max=100, HLS=True) # Sobel X on HLS
+grady_s = abs_sobel_thresh(bird, orient='y', thresh_min=5, thresh_max=100, HLS=True) # Sobel Y on HLS
+mag_binary_s = mag_thresh(bird, sobel_kernel=9, mag_thresh=(50, 200), HLS=True) # magnitude on HLS
+mag_binary = mag_thresh(bird, sobel_kernel=9, mag_thresh=(50, 200),HLS=False) # magnitude on Grayscale
+dir_binary_s = dir_threshold(bird, sobel_kernel=15, thresh=(0.7, 1.3), HLS=True) # directionsl on HLS
+```
 
 Once the colorspace and gradient techniques were performed, I combined several of these techniques to create the final binary_warped image. Once again, this required significant tuning based on the test images and the final video. The final line of code to create the binary_warped image and an example of the binary warped image are shown below:
 
