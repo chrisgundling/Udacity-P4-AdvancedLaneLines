@@ -116,7 +116,7 @@ This next step is where I spent the most time and achieved the biggest gains in 
 
 1. Limits to Polynomial Coefficients: I first created several made up (random) curves that were similar in curvature to what the lane lines would be. This allowed me to get a good grasp for the values that I should be expecting for the polynomial coefficients. A plot of this is shown below. Using this information I limited the values that the squared and linear terms could take. 
 
-<img src="images/calibrate.png" width="1000">
+<img src="images/calibrate.png" width="600">
 
 2. Confidence of left/right lanes: Based on the number of pixels found corresponding to each lane line I implemented a “confidence” metric. This metric interesting to watch during the video processing and could be used in further pre-processing techniques.
 
