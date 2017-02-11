@@ -54,11 +54,20 @@ In `Steps 3b-3e` in `P4-AdvancedLanes-Tuning.ipynb` I first used color space tra
 Once the color space transform and thresholding is applied, I then used functions that applied Sobel Threshholding in the x and y orientations, gradient magnitude and directional gradient thresholding to further process the images. Each of these techniques is able to pick up different aspects of the line pixels in each image. The following shows the final inputs to each of these functions.
 
 ```
-abs_sobel_thresh(bird, orient='x', thresh_min=5, thresh_max=100, HLS=True) # Sobel X on HLS
-grady_s = abs_sobel_thresh(bird, orient='y', thresh_min=5, thresh_max=100, HLS=True) # Sobel Y on HLS
-mag_binary_s = mag_thresh(bird, sobel_kernel=9, mag_thresh=(50, 200), HLS=True) # magnitude on HLS
-mag_binary = mag_thresh(bird, sobel_kernel=9, mag_thresh=(50, 200),HLS=False) # magnitude on Grayscale
-dir_binary_s = dir_threshold(bird, sobel_kernel=15, thresh=(0.7, 1.3), HLS=True) # directionsl on HLS
+# Sobel X on HLS
+gradx_s = abs_sobel_thresh(bird, orient='x', thresh_min=5, thresh_max=100, HLS=True) 
+
+# Sobel Y on HLS
+grady_s = abs_sobel_thresh(bird, orient='y', thresh_min=5, thresh_max=100, HLS=True) 
+
+# Magnitude on HLS
+mag_binary_s = mag_thresh(bird, sobel_kernel=9, mag_thresh=(50, 200), HLS=True) 
+
+# Magnitude on Grayscale
+mag_binary = mag_thresh(bird, sobel_kernel=9, mag_thresh=(50, 200),HLS=False) 
+
+# Directional on HLS
+dir_binary_s = dir_threshold(bird, sobel_kernel=15, thresh=(0.7, 1.3), HLS=True) 
 ```
 
 Once the colorspace and gradient techniques were performed, I combined several of these techniques to create the final binary_warped image. Once again, this required significant tuning based on the test images and the final video. The final line of code to create the binary_warped image and an example of the binary warped image are shown below:
@@ -71,32 +80,18 @@ Once the colorspace and gradient techniques were performed, I combined several o
 
 *Rubric: Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.*
 
-As previously mentioned, the perspective transform was performed directly after distortion correction. I found it much easier to tune the various color space and gradient transforms when viewing the binary image from the bird’ eye view.
+As previously mentioned, the perspective transform was performed directly after distortion correction. I found it much easier to tune the various color space and gradient transforms when viewing the binary image from the bird’s eye view. This code has been implemented in section `3a. Birds-Eye Perspective Transform` in the `P4-AdvancedLanes-Tuning.ipynb` notebook and the function is called `birds_eye()`.
 
-The code for my perspective transform is includes a function called birds_eye, which appears in lines 1 through 8 in the file P4_tuning.pynb (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook). The birds_eye() function takes as inputs an image ( img ), as well as source ( src ) and destination ( dst ) points. I chose the hardcode the source and destination points in the following manner:
-```
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
-
-```
-This resulted in the following source and destination points:
+The birds_eye() function takes as inputs an image (`img`) and harcodes the source (`src`) and destination (`dst`) points. After considerable tuning, the source and destination points were finalized to be:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+| 580, 460      | 200, 100      | 
+| 200, 720      | 200, 720      |
+| 705, 460      | 960, 100      |
+| 1140, 720     | 960, 720      |
 
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
+I verified that my perspective transform was working as expected by visually inspecting the resulting image for parallel lines when using images with straight lane lines. The before and after results can be seen in the following pictures.
 
 #### 4. Lane Line Curve Fitting (Histograms and Sliding Windows)
 
