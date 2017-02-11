@@ -120,9 +120,15 @@ Still within the `sliding_windows()` function, the next step is where I spent th
 
 2. Confidence of left/right lanes: Based on the number of pixels found corresponding to each lane line I implemented a “confidence” metric. This metric interesting to watch during the video processing and was used in other pre-processing techniques. To determine the optimal number of pixels found for the left and right lanes, I compared the number of pixels found during the relatively easy straight lines images with images that had high curvature, shadows and other road markings.
 
-3. Left Lane Right Lane Distance Apart: The distance between the left and right lanes should not change drastically, it should constantly be around 3.7 meters or 800 pixels in my implementation. I applied a check for this and if the lane lines were too far apart or too close together I would discard the information from the lane line with the least “confidence”. The discarded lane line was then given the pixels from the more confident lane line shifted by 800 pixels in the appropriate direction.
+3. Lane Width Check: The distance lane wifth should not change drastically, it should constantly be around 3.7 meters or 800 pixels in my implementation. I applied a check for this and if the lane lines were too far apart or too close together I would discard the information from the lane line with the least “confidence”. The discarded lane line was then given the pixels from the more confident lane line shifted by 800 pixels in the appropriate direction.
 
 4. Averaging the Fits: I stored the fits from each images an applied an averaging (smoothing) over the most recent 20 images. This helped to stablize the line fits and reduce the jitter that could be seen in the video.
+
+5. Checking for Outliers: I implemented a technique that looked for outliers in the polynomial fit coefficients, but I did not end up using this function for the final video. The limits on the polynomial fit coefficients described above worked significantly better.
+
+Finally in `Step 4c. Skip the sliding window now that we have lines` of the notebook, I implemented a function called `find_lines()` that used the curve fits from the previous timestep to determine the new lines. Once the sliding window techqiue is performed in the first frame, the base of the left/right lanes nearest to the vehicle should not change greatly from frame to frame. Thus, the previous step's curve fit along with a margin was used to determine the current timestep fits. An example of this technique is shown below with the search area around the polynomial curves highlighted in green:
+
+<img src="images/new_line.png" width="500">
 
 #### 5. Visualizing the Lanes and Calculating Lane Information
 
