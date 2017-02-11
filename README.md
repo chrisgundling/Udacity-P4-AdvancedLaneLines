@@ -99,12 +99,20 @@ I verified that my perspective transform was working as expected by visually ins
 
 *Rubric: Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?*
 
-After creating the `binary_warped` image, the next step was to apply a histogram to the image to determine the peak locations of pixels in the image. A function to determine the histogram is coded in section `Step 4a. Histogram of Output` in the notebook. Once the histogram was found, a sliding window technique was used to isolate the lane line pixels in the image. This code can be found in section `4b. Sliding Windows and Polynomial Fit` in the notebook. This was a critical step in the code for determining the proper left and right lane lines. The sliding windows (rectangles) start with their center at the X locations were the histogram peaks occur. The sliding windows are then extended 100 pixels in the +/- X directions (`margin = 100`) and look for a minimum of 50 pixels. If this condition is met, then the next sliding window will be cetered at the average X location of these pixels, otherwise they will continue to center around the histogram peaks. Once the lane pixel indices and X,Y locations are determined, a 2nd order polynomial fit was used to fit lines to these pixels for both the left and right lane lines. An example of the histogram and the sliding window fit is shown below.
+After creating the `binary_warped` image, the next step was to apply a histogram to the image to determine the peak locations of pixels in the image. A function to determine the histogram is coded in section `Step 4a. Histogram of Output` in the notebook. Once the histogram was found, a sliding window technique was used to isolate the lane line pixels in the image. This code can be found in section `4b. Sliding Windows and Polynomial Fit` in the notebook. 
+
+This was a critical step in the code for determining the proper left and right lane lines. The sliding windows (rectangles) start with their center at the X locations were the histogram peaks occur. The sliding windows are then extended 100 pixels in the +/- X directions (`margin = 100`) and look for a minimum of 50 pixels. If this condition is met, then the next sliding window will be cetered at the average X location of these pixels, otherwise they will continue to center around the histogram peaks. Once the lane pixel indices and X,Y locations are determined, a 2nd order polynomial fit was used to fit lines to these pixels for both the left and right lane lines using the numpy polyfit function.
+```
+left_fit = np.polyfit(lefty, leftx, 2)
+right_fit = np.polyfit(righty, rightx, 2)
+```
+
+An example of the histogram and the sliding window fit is shown below.
 
 <img src="images/histogram.png" width="400">
 <img src="images/sliding_windows.png" width="400">
 
-This next step is where I spent the most time and got the biggest gain in results. I used several different techniques to check that the determined polynomial fits for each lane line were realistic. 
+This next step is where I spent the most time and achieved the biggest gains in results. I used several different techniques to check that the determined polynomial fits for each lane line were realistic. 
 
 1. Limits to Polynomial Coefficients: I first created several made up (random) curves that were similar in curvature to what the lane lines would be. This allowed me to get a good grasp for the values that I should be expecting for the polynomial coefficients. A plot of this is shown below. Using this information I limited the values that the squared and linear terms could take. 
 2. Confidence of left/right lanes: Based on the number of pixels found corresponding to each lane line I implemented a “confidence” metric. This metric interesting to watch during the video processing and could be used in further pre-processing techniques.
