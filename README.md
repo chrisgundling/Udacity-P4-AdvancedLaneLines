@@ -101,8 +101,8 @@ I verified that my perspective transform was working as expected by visually ins
 
 After creating the `binary_warped` image, the next step was to apply a histogram to the image to determine the peak locations of pixels in the image. A function to determine the histogram is coded in section `Step 4a. Histogram of Output` in the notebook. An example of this technique is shown below:
 
-<img src="images/histogram.png" width="500">
-<img src="images/sliding_windows.png" width="500">
+<img src="images/histogram.png" width="400">
+<img src="images/sliding_windows.png" width="400">
 
 Once the histogram was found, a sliding window technique was used to isolate the lane line pixels in the image. This was a critical step in the code for determining the proper left and right lane lines. 
 The sliding windows (rectangles) start with their center at the X locations were the peak number of pixels were found. The sliding windows are then extended 100 pixels in either X direction (margin) and look for a minimum of 60 pixels. If this condition is met, then the, otherwise the windows will return to center. Once the lane pixel indices and X,Y locations are determined, a 2nd order polynomial fit was used to fit lines to these pixels for both the left and right lane lines. 
