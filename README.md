@@ -128,7 +128,7 @@ Still within the `sliding_windows()` function, the next step is where I spent th
 
 Finally in `Step 4c. Skip the sliding window now that we have lines` of the notebook, I implemented a function called `find_lines()` that used the curve fits from the previous timestep to determine the new lines. Once the sliding window techqiue is performed in the first frame, the base of the left/right lanes nearest to the vehicle should not change greatly from frame to frame. Thus, the previous step's curve fit along with a margin was used to determine the current timestep fits. An example of this technique is shown below with the search area around the polynomial curves highlighted in green:
 
-<img src="images/new_line.png" width="500">
+<img src="images/new_fit.png" width="400">
 
 #### 5. Visualizing the Lanes and Calculating Lane Information
 
