@@ -57,7 +57,7 @@ Once the colorspace and gradient techniques were performed, I combined several o
 
 `binary_warped[((gradx_s == 1) & (grady_s == 1)) | (mag_binary_s == 1) | (dir_binary_s == 1) | (mag_binary == 1)] = 1`
 
-<img src="images/final_binary.png" width="1000">
+<img src="images/final_binary_1.png" width="1000">
 
 #### 3. Perspective Transform
 
