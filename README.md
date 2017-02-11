@@ -130,23 +130,17 @@ Finally in `Step 4c. Skip the sliding window now that we have lines` of the note
 
 <img src="images/new_fit.png" width="400">
 
-#### 5. Visualizing the Lanes and Calculating Lane Information
+#### 5 and 6. Visualizing the Lanes and Calculating Lane Information
 
 *Rubric: Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.*
 
-The next step is coded in `Step 4d. Radius of curvature` of the notebook. A function called `rad_curve()` draws the lane lines on the image, determines the radius of curvature of the lines and determines the car’s position relative to the center of the lanes. 
-
-Both fom
-
-<img src="images/test_images.png" width="800">
-
-#### 6. Lines on the Road!
-
 *Rubric: Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.*
+
+The next step is coded in `Step 4d. Radius of curvature` of the notebook. A function called `rad_curve()` draws the lane lines on the image, determines the radius of curvature of the lines and determines the car’s position relative to the center of the lanes. 
 
 I then tested the full implementation of all these techniques on the 6 test images that were provided and the results can be seen below. Once I had achieved reasonably results on these test images, then I simplified as much of the code as I could (P4_Video.pynb) and ran the video through it. 
 
-![alt text][image6]
+<img src="images/test_images.png" width="800">
 
 ---
 
@@ -162,4 +156,6 @@ Here's a [link to my video result](./project_video.mp4)
 
 *Rubric: Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?*
 
-This was an eye opening experience to realize how much tuning was required to the color space, gradient and polynomial techniques to reach a successful result.  While the resulting code worked well for the project video, I found that it did not work particularly well on the challenge videos. For vehicle manufacturers to implement similar approaches that generalize well to all lane situations (or situations with no lane lines) seems like an incredibly difficult task. I implemented a metric in this project that I think could be used for further improvements in performance. By using an optimization technique, the “confidence” metric for each of lane lines detection could be maximized. This would be done by having all of the tunable parameters as inputs to the optimizer and the confidence as the output. The model would then be tested over a range of thousands (or millions) of different images and the tunable parameters would be selected such as to maximize the total lane line prediction confidence for all of the images.   
+This project was an eye opening experience to realize how much tuning was required to the color space, gradient and polynomial techniques to reach a successful result. While the resulting code worked well for the project video, I found that it did not perform particularly well on the challenge videos. For vehicle manufacturers to implement similar approaches that generalize well to all lane situations (or situations with no lane lines) seems like an incredibly difficult task. I implemented a metric in this project that I think could be used for further improvements in performance. By using an optimization technique, the “confidence” metric for each of lane lines detection could be maximized. This would be done by having all of the tunable parameters as inputs to the optimizer and the confidence as the output. The model would then be tested over a range of thousands (or millions) of different images and the tunable parameters would be selected such as to maximize the total lane line prediction confidence for all of the images.  
+
+Judging from the challenge videos, this lane line fiding implementation will fail when there is large road curvatures, significant shadows, or other road lines/cracks that have strong gradients. In addition to the optimization method mentioned above, another technique to make this more robust could be to determine the typical thickness of the lane lines and to filter out lines that don't have a minimum thickness. Another idea would be to combine the computer vision method implemented here with a CNN type model that can classify portions of the road that are lanes versus not. 
