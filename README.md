@@ -130,6 +130,8 @@ Still within the `sliding_windows()` function, the next step is where I spent th
 
 I then created several sections of code that drew the lane lines on the image, determined the radius of curvature of the lines and determined the car’s position relative to the center of the lanes. 
 
+<img src="images/test_images.png" width="800">
+
 #### 6. Lines on the Road!
 
 *Rubric: Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.*
