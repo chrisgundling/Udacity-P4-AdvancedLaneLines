@@ -16,7 +16,7 @@ The goals of this project were the following:
 - Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
 ### Code Summary
-I used two different python notebooks for this project, the first (`P4-AdvancedLanes-Tuning.ipynb`) for developing an initial solution using single images at a time and tuning the various parameters. The second (`P4_AdvancedLaned-Video.pynb`) was for testing on the project video and in this version I have simplified many of the steps in order to speed up the image processing pipeline. The following sections will refer mostly (`P4-AdvancedLanes-Tuning.ipynb`) and the video section will refer to (`P4_AdvancedLaned-Video.pynb`).
+I used two different python notebooks for this project, the first (`P4-AdvancedLanes-Tuning.ipynb`) for developing an initial solution using single images at a time and tuning the various parameters. The second (`P4_AdvancedLaned-Video.pynb`) was for testing on the project video. In the video notebook I have simplified many of the steps in order to speed up the image processing pipeline. The following sections will refer mostly (`P4-AdvancedLanes-Tuning.ipynb`) and the video section will refer to (`P4_AdvancedLaned-Video.pynb`).
 
 ### Step 1: Camera Calibration
 
