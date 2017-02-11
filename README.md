@@ -39,7 +39,7 @@ The output `objpoints` and `imgpoints` are then used to compute the camera calib
 
 *Rubric: Has the distortion correction been correctly applied to each image?*
 
-The first step in my image processing pipeline was to undistort the image. The code for this step is `Step 2: Apply Calibration to Raw Images` notebook and produces following result for one of the test images:
+The first step in my image processing pipeline was to undistort the image using the camera calibration information. The code for this step is at `Step 2: Apply Calibration to Raw Images` and produces the following result for one of the test images:
 
 <img src="images/real_calibrate.png" width="1000">
 
@@ -49,11 +49,15 @@ The first step in my image processing pipeline was to undistort the image. The c
 
 I used several different techniques to create my final binary_warped image. I actually found that applying the perspective transform first gave better results and made it easier to see what the polynomial fits were trying to fit to. This is described in following sections, but I wanted to quickly mention it since all the transformed images have already been warped.
 
-I first used color space transforms on my images, both to grayscale and to HSV color space. I found that using a combination of both these techniques helped to see both white and yellow lines. After applying the transform, the pixel values are thresholded by some amount. The threshold values were determined from extensive testing using all of the provided test images. 
+In `Steps 3b-3e` in `P4-AdvancedLanes-Tuning.ipynb` I first used color space transforms on my images, both to grayscale and to HLS color space. I found that using a combination of both these techniques helped to see both white and yellow lines. After applying the transform, the pixel values are thresholded by (gray threshold: `thresh_g = (180, 255)` and HLS threshold: `thresh_s = (150, 255)`). The threshold values were determined from extensive testing using all of the provided test images. Only the saturation channel of the HLS colorspace was used.
 
-Once the color space transform and thresholding is applied, I then used gradient direction, gradient magnitude and gradient thresholding to further process the images. The code for gradient x, y gradient thresholding is shown in section 3a, gradient magnitude in 3b, and gradient direction in 3c. Each of these techniques is able to pick up different aspects of the line pixels in each image.
+Once the color space transform and thresholding is applied, I then used Sobel Threshholding in the x and y orientations, gradient magnitude and directional gradient thresholding to further process the images. Each of these techniques is able to pick up different aspects of the line pixels in each image.
 
-Once the colorspace and gradient techniques were done, I combined several of these techniques to create the final binary_warped image. Once again, this required significant tuning based on the test images and the final video. The final line of code to create the binary_warped image and an example of the binary warped image are shown below:
+Once the colorspace and gradient techniques were performed, I combined several of these techniques to create the final binary_warped image. Once again, this required significant tuning based on the test images and the final video. The final line of code to create the binary_warped image and an example of the binary warped image are shown below:
+
+`binary_warped[((gradx_s == 1) & (grady_s == 1)) | (mag_binary_s == 1) | (dir_binary_s == 1)] = 1`
+
+<img src="images/final_binary.png" width="1000">
 
 #### 3. Perspective Transform
 
