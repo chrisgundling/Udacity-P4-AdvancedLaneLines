@@ -134,7 +134,9 @@ Finally in `Step 4c. Skip the sliding window now that we have lines` of the note
 
 *Rubric: Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.*
 
-I then created several sections of code that drew the lane lines on the image, determined the radius of curvature of the lines and determined the car’s position relative to the center of the lanes. 
+The next step is coded in `Step 4d. Radius of curvature` of the notebook. A function called `rad_curve()` draws the lane lines on the image, determines the radius of curvature of the lines and determines the car’s position relative to the center of the lanes. 
+
+Both fom
 
 <img src="images/test_images.png" width="800">
 
