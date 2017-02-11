@@ -112,15 +112,17 @@ An example of the histogram and the sliding window fit is shown below.
 <img src="images/histogram.png" width="400">
 <img src="images/sliding_windows.png" width="400">
 
-This next step is where I spent the most time and achieved the biggest gains in results. I used several different techniques to check that the determined polynomial fits for each lane line were realistic. 
+Still within the `sliding_windows()` function, the next step is where I spent the most time and achieved the biggest gains in results. I used several different techniques to check that the determined polynomial fits for each lane line were realistic. 
 
 1. Limits to Polynomial Coefficients: I first created several made up (random) curves that were similar in curvature to what the lane lines would be. This allowed me to get a good grasp for the values that I should be expecting for the polynomial coefficients. A plot of this is shown below. Using this information I limited the values that the squared and linear terms could take. 
 
 <img src="images/polyfits.png" width="600">
 
-2. Confidence of left/right lanes: Based on the number of pixels found corresponding to each lane line I implemented a “confidence” metric. This metric interesting to watch during the video processing and could be used in further pre-processing techniques.
+2. Confidence of left/right lanes: Based on the number of pixels found corresponding to each lane line I implemented a “confidence” metric. This metric interesting to watch during the video processing and was used in other pre-processing techniques. To determine the optimal number of pixels found for the left and right lanes, I compared the number of pixels found during the relatively easy straight lines images with images that had high curvature, shadows and other road markings.
 
 3. Left Lane Right Lane Distance Apart: The distance between the left and right lanes should not change drastically, it should constantly be around 3.7 meters or 800 pixels in my implementation. I applied a check for this and if the lane lines were too far apart or too close together I would discard the information from the lane line with the least “confidence”. The discarded lane line was then given the pixels from the more confident lane line shifted by 800 pixels in the appropriate direction.
+
+4. Averaging the Fits: I stored the fits from each images an applied an averaging (smoothing) over the most recent 20 images. This helped to stablize the line fits and reduce the jitter that could be seen in the video.
 
 #### 5. Visualizing the Lanes and Calculating Lane Information
 
