@@ -55,7 +55,7 @@ Once the color space transform and thresholding is applied, I then used Sobel Th
 
 Once the colorspace and gradient techniques were performed, I combined several of these techniques to create the final binary_warped image. Once again, this required significant tuning based on the test images and the final video. The final line of code to create the binary_warped image and an example of the binary warped image are shown below:
 
-`binary_warped[((gradx_s == 1) & (grady_s == 1)) | (mag_binary_s == 1) | (dir_binary_s == 1)] = 1`
+`binary_warped[((gradx_s == 1) & (grady_s == 1)) | (mag_binary_s == 1) | (dir_binary_s == 1) | (mag_binary == 1)] = 1`
 
 <img src="images/final_binary.png" width="1000">
 
