@@ -136,23 +136,29 @@ Finally in `Step 4c. Skip the sliding window now that we have lines` of the note
 
 *Rubric: Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.*
 
-The next step is coded in `Step 4d. Radius of curvature` of the notebook. A function called `rad_curve()` draws the lane lines on the image, determines the radius of curvature of the lines and determines the car’s position relative to the center of the lanes. The polynomial fits have the form f(y) = A*\mathrm{y}^{2} + B*y + C.
+The next step is coded in `Step 4d. Radius of curvature` of the notebook. A function called `rad_curve()` draws the lane lines on the image, determines the radius of curvature of the lines and determines the car’s position relative to the center of the lanes. The polynomial fits have the form:
 
-The radius of curvature can then be calculated at any point x of the function x=f(y) is given as follows:
+<img src="images/Equation1.png" width="100">
 
-R​curve​​ =​∣​dy​2​​ ​​d​2​​ x​​ ∣​​[1+(​dy​​dx​​ )​2​​ ]​3/2​​ ​​ 
+From this equation, the radius of curvature can then be calculated at any point x of the function x=f(y) is given as follows:
 
-In the case of the second order polynomial above, the first and second derivatives are:
+<img src="images/Equation2.png" width="100">
 
-f​′​​ (y)=​dy​dx​​ =2Ay+Bf​​ (y)=​dy​2​​ ​​d​2​​ x​​ =2A
+The first and second derivatives of the second order polynomial used to fit the lane lines are:
 
-So, our equation for radius of curvature becomes:
+<img src="images/Equation3.png" width="100">
 
-R​curve​​ =​∣2A∣​​(1+(2Ay+B)​2​​ )​3/2
+<img src="images/Equation4.png" width="100">
 
-The y values of your image increase from top to bottom, so if, for example, you wanted to measure the radius of curvature closest to your vehicle, you could evaluate the formula above at the y value corresponding to the bottom of your image, or in Python, at yvalue = image.shape[0].
+So, the equation for radius of curvature becomes:
 
-I then tested the full implementation of all these techniques on the 6 test images that were provided and the results can be seen below. Once I had achieved reasonably results on these test images, then I simplified as much of the code as I could (P4_Video.pynb) and ran the video through it. 
+<img src="images/Equation5.png" width="100">
+
+The radius of curvature was first calculated in "pixel space", but we actually need to repeat this calculation after converting our x and y values to "real world" space. This is done by scaling the x and y axis by their real word distances. The lane was assumed about 30 meters long and 3.7 meters wide.
+
+The vehicle's position relative to center can then be found by considering the difference of the center of the image (camera/vehicle center) to the center of the lane (right lane + left lane / 2). This was also scaled to real world space.
+
+I then tested the full implementation of all these techniques on the 6 test images that were provided and the results can be seen below.
 
 <img src="images/test_images.png" width="800">
 
@@ -162,7 +168,9 @@ I then tested the full implementation of all these techniques on the 6 test imag
 
 *Rubric:	Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).*
 
-Here's a [link to my video result](./P4_finalchris.mp4)
+Once I had achieved reasonably results on these test images, then I simplified as much of the code as I could (`P4_AdvancedLaned-Video.pynb`) and ran the video through it. 
+
+Here's a [link to my video result](./P4_finalchris.mp4) and here is the youtube link.
 
 ---
 
@@ -170,6 +178,10 @@ Here's a [link to my video result](./P4_finalchris.mp4)
 
 *Rubric: Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?*
 
-This project was an eye opening experience to realize how much tuning was required to the color space, gradient and polynomial techniques to reach a successful result. While the resulting code worked well for the project video, I found that it did not perform particularly well on the challenge videos. For vehicle manufacturers to implement similar approaches that generalize well to all lane situations (or situations with no lane lines) seems like an incredibly difficult task. I implemented a metric in this project that I think could be used for further improvements in performance. By using an optimization technique, the “confidence” metric for each of lane lines detection could be maximized. This would be done by having all of the tunable parameters as inputs to the optimizer and the confidence as the output. The model would then be tested over a range of thousands (or millions) of different images and the tunable parameters would be selected such as to maximize the total lane line prediction confidence for all of the images.  
+This project was an eye opening experience. Realizing how much tuning was required to the color space, gradient and polynomial techniques to reach a successful result was very surprising. While the resulting code worked well for the project video, I found that it did not perform particularly well on the challenge videos. For vehicle manufacturers to implement similar approaches that generalize well to all lane situations (or situations with no lane lines) seems like an incredibly difficult task using only these techniques. Working with machine/deep learning algorithms over the past few months, I have been used to implementing "smart" models that learn on their own. The pipeline implemented here was not smart and feels highly "overfit" to the project video images. 
 
-Judging from the challenge videos, this lane line fiding implementation will fail when there is large road curvatures, significant shadows, or other road lines/cracks that have strong gradients. In addition to the optimization method mentioned above, another technique to make this more robust could be to determine the typical thickness of the lane lines and to filter out lines that don't have a minimum thickness. Another idea would be to combine the computer vision method implemented here with a CNN type model that can classify portions of the road that are lanes versus not. 
+To overcome these difficiencies, I implemented a metric in this project that I think could be used for further improvements in performance. By using an optimization technique, the “confidence” metric for each of lane lines detection could be maximized. This would be done by having all of the tunable parameters as inputs to the optimizer and the confidence as the output. The model would then be tested over a range of thousands (or millions) of different images and the tunable parameters would be selected such as to maximize the total lane line prediction confidence for all of the images.  
+
+Judging from the challenge videos, this lane line fiding implementation will fail when there is large road curvatures, significant shadows, or other road lines/cracks that have strong gradients. In addition to the optimization method mentioned above, another technique to make this more robust could be to determine the typical thickness of the lane lines and to filter out lines that don't have a minimum thickness. 
+
+The final idea that could make these techniques more robust would be to combine the computer vision method implemented here with a CNN or other machine learning type model that can classify portions of the road that are lanes versus not. The implementation would be similar to the techniques used in project 5 to identify vehicles, expecpt it would be for lane lines instead. The computer vision and machine learning approaches could be compared against one another to achieve a more robust solution.
