@@ -158,6 +158,8 @@ The radius of curvature was first calculated in "pixel space", but we actually n
 
 The vehicle's position relative to center can then be found by considering the difference of the center of the image (camera/vehicle center) to the center of the lane (right lane + left lane / 2). This was also scaled to real world space.
 
+I then created visualizations of the full lane and lane lines using the opencv `cv2.fillPoly()` function. All of the lane line information including radius of curvature, distance from center and lane prediction confidence were also added to the images. 
+
 I then tested the full implementation of all these techniques on the 6 test images that were provided and the results can be seen below.
 
 <img src="images/test_images_final.png" width="800">
