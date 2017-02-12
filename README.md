@@ -112,7 +112,7 @@ An example of the histogram and the sliding window fit is shown below.
 <img src="images/histogram.png" width="400">
 <img src="images/sliding_windows.png" width="400">
 
-Still within the `sliding_windows()` function, the next step is where I spent the most time and achieved the biggest gains in results. I used several different techniques to check that the determined polynomial fits for each lane line were realistic. 
+Still within the `sliding_windows()` function, the next steps are where I spent the most time and achieved the biggest gains in results. I used several different techniques to check that the determined polynomial fits for each lane line were realistic. 
 
 1. Limits to Polynomial Coefficients: I first created several made up (random) curves that were similar in curvature to what the lane lines would be. This allowed me to get a good grasp for the values that I should be expecting for the polynomial coefficients. A plot of this is shown below. Using this information I limited the values that the squared and linear terms could take. 
 
