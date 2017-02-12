@@ -120,7 +120,7 @@ Still within the `sliding_windows()` function, the next steps are where I spent 
 
 2. Confidence of left/right lanes: Based on the number of pixels found corresponding to each lane line I implemented a “confidence” metric. This metric interesting to watch during the video processing and was used in other pre-processing techniques. To determine the optimal number of pixels found for the left and right lanes, I compared the number of pixels found during the relatively easy straight lines images with images that had high curvature, shadows and other road markings.
 
-3. Lane Width Check: The distance lane wifth should not change drastically, it should constantly be around 3.7 meters or 800 pixels in my implementation. I applied a check for this and if the lane lines were too far apart or too close together I would discard the information from the lane line with the least “confidence”. The discarded lane line was then given the pixels from the more confident lane line shifted by 800 pixels in the appropriate direction.
+3. Lane Width Check: The distance lane wifth should not change drastically, it should constantly be around 3.7 meters or 800 pixels in my implementation. I applied a check for this and if the lane lines were too far apart or too close together I would discard the information from the lane lines for that timestep if the condition was not met.
 
 4. Averaging the Fits: I stored the fits from each images an applied an averaging (smoothing) over the most recent 20 images. Since the video is taken at 25 fps, this corresponds to smoothing of approximately 1 second of images. This helped to stablize the line fits and reduce the jitter that could be seen in the video.
 
@@ -158,9 +158,7 @@ The radius of curvature was first calculated in "pixel space", but we actually n
 
 The vehicle's position relative to center can then be found by considering the difference of the center of the image (camera/vehicle center) to the center of the lane (right lane + left lane / 2). This was also scaled to real world space.
 
-I then created visualizations of the full lane and lane lines using the opencv `cv2.fillPoly()` function. All of the lane line information including radius of curvature, distance from center and lane prediction confidence were also added to the images. 
-
-I then tested the full implementation of all these techniques on the 6 test images that were provided and the results can be seen below.
+I then created visualizations of the full lane and lane lines using the opencv `cv2.fillPoly()` function. All of the lane line information including radius of curvature, distance from center and lane prediction confidence were also added to the images. Finally, I tested the full implementation of all these techniques on the 6 test images that were provided and the results can be seen below.
 
 <img src="images/test_images_final.png" width="800">
 
@@ -172,7 +170,9 @@ I then tested the full implementation of all these techniques on the 6 test imag
 
 Once I had achieved reasonably results on these test images, then I simplified as much of the code as I could (`P4_AdvancedLanes-Video.pynb`) and ran the video through it. A key part of this process was using subclips from the video to further tune the solution using a command such as: `clip1 = VideoFileClip("project_video.mp4").subclip(35,45)`.
 
-Here's a [link to my video result](./P4_finalvideo.mp4) and here is the youtube link.
+Here's a [link to my video result](./P4_finalvideo.mp4) and here is the youtube link: https://youtu.be/r0C3hhiks5I
+
+An ever better video that also shows the binary_warped result on top of the regular video is here: 
 
 ---
 
