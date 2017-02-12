@@ -160,7 +160,7 @@ The vehicle's position relative to center can then be found by considering the d
 
 I then tested the full implementation of all these techniques on the 6 test images that were provided and the results can be seen below.
 
-<img src="images/test_images.png" width="800">
+<img src="images/test_images_final.png" width="800">
 
 ---
 
@@ -168,7 +168,7 @@ I then tested the full implementation of all these techniques on the 6 test imag
 
 *Rubric:	Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).*
 
-Once I had achieved reasonably results on these test images, then I simplified as much of the code as I could (`P4_AdvancedLaned-Video.pynb`) and ran the video through it. 
+Once I had achieved reasonably results on these test images, then I simplified as much of the code as I could (`P4_AdvancedLanes-Video.pynb`) and ran the video through it. A key part of this process was using subclips from the video to further tune the solution using a command such as: `clip1 = VideoFileClip("project_video.mp4").subclip(35,45)`.
 
 Here's a [link to my video result](./P4_finalchris.mp4) and here is the youtube link.
 
