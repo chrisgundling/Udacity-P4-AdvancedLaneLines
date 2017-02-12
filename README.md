@@ -138,21 +138,21 @@ Finally in `Step 4c. Skip the sliding window now that we have lines` of the note
 
 The next step is coded in `Step 4d. Radius of curvature` of the notebook. A function called `rad_curve()` draws the lane lines on the image, determines the radius of curvature of the lines and determines the car’s position relative to the center of the lanes. The polynomial fits have the form:
 
-<img src="images/Equation1.png" width="100">
+<img src="images/Equation1.png" width="200">
 
 From this equation, the radius of curvature can then be calculated at any point x of the function x=f(y) is given as follows:
 
-<img src="images/Equation2.png" width="100">
+<img src="images/Equation2.png" width="200">
 
 The first and second derivatives of the second order polynomial used to fit the lane lines are:
 
-<img src="images/Equation3.png" width="100">
+<img src="images/Equation3.png" width="200">
 
-<img src="images/Equation4.png" width="100">
+<img src="images/Equation4.png" width="180">
 
 So, the equation for radius of curvature becomes:
 
-<img src="images/Equation5.png" width="100">
+<img src="images/Equation5.png" width="200">
 
 The radius of curvature was first calculated in "pixel space", but we actually need to repeat this calculation after converting our x and y values to "real world" space. This is done by scaling the x and y axis by their real word distances. The lane was assumed about 30 meters long and 3.7 meters wide.
 
