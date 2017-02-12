@@ -136,7 +136,21 @@ Finally in `Step 4c. Skip the sliding window now that we have lines` of the note
 
 *Rubric: Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.*
 
-The next step is coded in `Step 4d. Radius of curvature` of the notebook. A function called `rad_curve()` draws the lane lines on the image, determines the radius of curvature of the lines and determines the car’s position relative to the center of the lanes. 
+The next step is coded in `Step 4d. Radius of curvature` of the notebook. A function called `rad_curve()` draws the lane lines on the image, determines the radius of curvature of the lines and determines the car’s position relative to the center of the lanes. The polynomial fits have the form f(y) = A*\mathrm{y}^{2} + B*y + C.
+
+The radius of curvature can then be calculated at any point x of the function x=f(y) is given as follows:
+
+R​curve​​ =​∣​dy​2​​ ​​d​2​​ x​​ ∣​​[1+(​dy​​dx​​ )​2​​ ]​3/2​​ ​​ 
+
+In the case of the second order polynomial above, the first and second derivatives are:
+
+f​′​​ (y)=​dy​dx​​ =2Ay+Bf​​ (y)=​dy​2​​ ​​d​2​​ x​​ =2A
+
+So, our equation for radius of curvature becomes:
+
+R​curve​​ =​∣2A∣​​(1+(2Ay+B)​2​​ )​3/2
+
+The y values of your image increase from top to bottom, so if, for example, you wanted to measure the radius of curvature closest to your vehicle, you could evaluate the formula above at the y value corresponding to the bottom of your image, or in Python, at yvalue = image.shape[0].
 
 I then tested the full implementation of all these techniques on the 6 test images that were provided and the results can be seen below. Once I had achieved reasonably results on these test images, then I simplified as much of the code as I could (P4_Video.pynb) and ran the video through it. 
 
