@@ -173,6 +173,7 @@ Once I had achieved reasonably results on these test images, then I simplified a
 Here's a [link to my video result](./P4_finalvideo.mp4) and here is the youtube link: https://youtu.be/r0C3hhiks5I
 
 An ever better video that also shows the binary_warped result on top of the regular video is here: https://youtu.be/xrYMS9capco
+
 ---
 
 ### Discussion
