@@ -49,7 +49,7 @@ The first step in my image processing pipeline was to undistort the image using 
 
 I used several different techniques to create my final binary_warped image. I actually found that applying the perspective transform first gave better results and made it easier to see what the polynomial fits were trying to fit to. This is described in following sections, but I wanted to quickly mention it since all the transformed images have already been warped.
 
-In `Steps 3b-3e` in `P4-AdvancedLanes-Tuning.ipynb` I first used color space transforms on my images, both to grayscale and to HLS color space. I found that using a combination of both these techniques helped to see both white and yellow lines. After applying the transform, the pixel values are thresholded by (gray threshold: `thresh_g = (180, 255)` and HLS threshold: `thresh_s = (140, 255)`). The threshold values were determined from extensive testing using all of the provided test images. Only the saturation channel of the HLS colorspace was used as this proved particulary useful in seeing the yellow lines.
+In `Steps 3b-3e` in `P4-AdvancedLanes-Tuning.ipynb` I first used color space transforms on my images, both to grayscale and to HLS color space. I found that using a combination of both these techniques helped to see both white and yellow lines. After applying the transform, the pixel values are thresholded by (gray threshold: `thresh_g = (180, 255)` and HLS threshold: `thresh_s = (160, 255)`). The threshold values were determined from extensive testing using all of the provided test images. Only the saturation channel of the HLS colorspace was used as this proved particulary useful in seeing the yellow lines.
 
 Once the color space transform and thresholding is applied, I then used functions that applied Sobel Threshholding in the x and y orientations, gradient magnitude and directional gradient thresholding to further process the images. Each of these techniques is able to pick up different aspects of the line pixels in each image. The following shows the final inputs to each of these functions.
 
@@ -86,10 +86,10 @@ The birds_eye() function takes as inputs an image (`img`) and harcodes the sourc
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 578, 460      | 200, 100      | 
+| 580, 460      | 200, 100      | 
 | 200, 720      | 200, 720      |
-| 705, 460      | 1000, 100     |
-| 1140, 720     | 1000, 720     |
+| 706, 460      | 1040, 100     |
+| 1140, 720     | 1040, 720     |
 
 I verified that my perspective transform was working as expected by visually inspecting the resulting image for parallel lines when using images with straight lane lines. The before and after results can be seen in the following picture:
 
@@ -101,7 +101,7 @@ I verified that my perspective transform was working as expected by visually ins
 
 After creating the `binary_warped` image, the next step was to apply a histogram to the image to determine the peak locations of pixels in the image. A function to determine the histogram is coded in section `Step 4a. Histogram of Output` in the notebook. Once the histogram was found, a sliding window technique was used to isolate the lane line pixels in the image. This code can be found in section `4b. Sliding Windows and Polynomial Fit` in the notebook. 
 
-This was a critical step in the code for determining the proper left and right lane lines. The sliding windows (rectangles) start with their center at the X locations were the histogram peaks occur. The sliding windows are then extended 100 pixels in the +/- X directions (`margin = 100`) and look for a minimum of 50 pixels. If this condition is met, then the next sliding window will be cetered at the average X location of these pixels, otherwise they will continue to center around the histogram peaks. Once the lane pixel indices and X,Y locations are determined, a 2nd order polynomial fit was used to fit lines to these pixels for both the left and right lane lines using the numpy polyfit function.
+This was a critical step in the code for determining the proper left and right lane lines. The sliding windows (rectangles) start with their center at the X locations were the histogram peaks occur. The sliding windows are then extended 120 pixels in the +/- X directions (`margin = 120`) and look for a minimum of 60 pixels. If this condition is met, then the next sliding window will be cetered at the average X location of these pixels, otherwise they will continue to center around the histogram peaks. Once the lane pixel indices and X,Y locations are determined, a 2nd order polynomial fit was used to fit lines to these pixels for both the left and right lane lines using the numpy polyfit function.
 ```
 left_fit = np.polyfit(lefty, leftx, 2)
 right_fit = np.polyfit(righty, rightx, 2)
@@ -122,7 +122,7 @@ Still within the `sliding_windows()` function, the next steps are where I spent 
 
 3. Lane Width Check: The distance lane wifth should not change drastically, it should constantly be around 3.7 meters or 800 pixels in my implementation. I applied a check for this and if the lane lines were too far apart or too close together I would discard the information from the lane line with the least “confidence”. The discarded lane line was then given the pixels from the more confident lane line shifted by 800 pixels in the appropriate direction.
 
-4. Averaging the Fits: I stored the fits from each images an applied an averaging (smoothing) over the most recent 20 images. This helped to stablize the line fits and reduce the jitter that could be seen in the video.
+4. Averaging the Fits: I stored the fits from each images an applied an averaging (smoothing) over the most recent 20 images. Since the video is taken at 25 fps, this corresponds to smoothing of approximately 1 second of images. This helped to stablize the line fits and reduce the jitter that could be seen in the video.
 
 5. Checking for Outliers: I implemented a technique that looked for outliers in the polynomial fit coefficients, but I did not end up using this function for the final video. The limits on the polynomial fit coefficients described above worked significantly better.
 
@@ -170,7 +170,7 @@ I then tested the full implementation of all these techniques on the 6 test imag
 
 Once I had achieved reasonably results on these test images, then I simplified as much of the code as I could (`P4_AdvancedLanes-Video.pynb`) and ran the video through it. A key part of this process was using subclips from the video to further tune the solution using a command such as: `clip1 = VideoFileClip("project_video.mp4").subclip(35,45)`.
 
-Here's a [link to my video result](./P4_finalchris.mp4) and here is the youtube link.
+Here's a [link to my video result](./P4_finalvideo.mp4) and here is the youtube link.
 
 ---
 
